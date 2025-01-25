@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lassi & Latte - Careers</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo"></a>
+        <div class="navbar-collapse collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <!-- This will leave space for the cafe name to be centered -->
+            </ul>
+            <!-- Cafe Name -->
+            <div class="cafe-name">
+                <h1>Lassi & Latte</h1>
+            </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('basket') }}"><img src="{{ url_for('static', filename='basket.png') }}" alt="Basket" class="icon"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('account') }}"><img src="{{ url_for('static', filename='account.png') }}" alt="Account" class="icon"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='home.png') }}" alt="Home" class="icon"></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="careers-container">
+        <h1>Join Our Team at Lassi & Latte</h1>
+        <p>At Lassi & Latte, we believe that our team is our greatest asset. We are always on the lookout for passionate and talented individuals who want to make a difference.</p>
+
+        <h2>Why Work With Us?</h2>
+        <ul>
+            <li>We foster a collaborative and creative environment.</li>
+            <li>We offer opportunities for growth and learning in the hospitality industry.</li>
+            <li>We are committed to providing excellent service to our customers.</li>
+        </ul>
+
+        <h2>Current Openings</h2>
+        <p>We are currently hiring for the following positions:</p>
+        <ul>
+            <li>Barista - Full Time / Part Time</li>
+            <p>As a Barista, you will be responsible for preparing high-quality beverages and providing excellent customer service. Experience in the food and beverage industry is preferred, but not mandatory. If you have a passion for coffee and customer service, we encourage you to apply!</p>
+            <li>Kitchen Assistant - Full Time</li>
+            <p>Our kitchen assistants help with food preparation, ensuring that the highest standards of hygiene and safety are maintained. Experience in a kitchen environment is helpful but not required. If you're a team player and ready to work in a fast-paced environment, this could be the role for you!</p>
+            <li>Customer Service Associate - Part Time</li>
+            <p>The front desk staff plays a key role in managing orders, handling customer queries, and ensuring a smooth operation at our cafe. Good communication skills and a friendly attitude are essential. Prior experience in customer service is a plus.</p>
+        </ul>
+
+        <p><strong>Note to Applicants:</strong> Please send your updated resume and cover letter to <strong>abc@gmail.com</strong>. We will get in touch with you if your qualifications meet our current needs.</p>
+        
+        <p>Thank you for considering Lassi & Latte for your next career move. We look forward to hearing from you!</p>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="footer text-center py-3">
+        <div class="container">
+            <a href="{{ url_for('about') }}">About Us</a> | 
+            <a href="{{ url_for('contact') }}">Contact Us</a> | 
+            <a href="{{ url_for('careers') }}">Careers</a> | 
+            <a href="{{ url_for('feedback') }}">Feedback</a> | 
+            <a href="{{ url_for('terms') }}">Terms & Conditions</a>
+            <p>&copy; 2024 Lassi & Latte. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

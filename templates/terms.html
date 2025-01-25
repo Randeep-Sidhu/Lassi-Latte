@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lassi & Latte - Terms & Conditions</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo"></a>
+        <div class="navbar-collapse collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <!-- This will leave space for the cafe name to be centered -->
+            </ul>
+            <!-- Cafe Name -->
+            <div class="cafe-name">
+                <h1>Lassi & Latte</h1>
+            </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('basket') }}"><img src="{{ url_for('static', filename='basket.png') }}" alt="Basket" class="icon"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('account') }}"><img src="{{ url_for('static', filename='account.png') }}" alt="Account" class="icon"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='home.png') }}" alt="Home" class="icon"></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container"></div>
+        <h1>Terms & Conditions</h1>
+        <p>Welcome to Lassi & Latte! Please review our terms and conditions carefully. By accessing or using our website, you agree to be bound by these terms.</p>
+        <p>1. **Acceptance of Terms**: By accessing or using our website, you agree to these terms and conditions. If you do not agree, please do not use our site.</p>
+        <p>2. **Changes to Terms**: We may update these terms from time to time. Continued use of the website constitutes acceptance of any changes.</p>
+        <p>3. **Privacy Policy**: Our privacy policy outlines how we handle your personal information. By using our site, you agree to our privacy policy.</p>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="footer text-center py-3">
+        <div class="container">
+            <a href="{{ url_for('about') }}">About Us</a> | 
+            <a href="{{ url_for('contact') }}">Contact Us</a> | 
+            <a href="{{ url_for('careers') }}">Careers</a> | 
+            <a href="{{ url_for('feedback') }}">Feedback</a> | 
+            <a href="{{ url_for('terms') }}">Terms & Conditions</a>
+            <p>&copy; 2024 Lassi & Latte. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

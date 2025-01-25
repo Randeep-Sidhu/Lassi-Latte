@@ -1,0 +1,132 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar Styles (Header) */
+.navbar {
+    background-color: #5a4630 !important; /* Earthy brown */
+    border-bottom: 2px solid #6f4f28;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand {
+    flex: 0 0 auto;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.logo {
+    height: 50px; /* Adjust as needed */
+}
+
+.navbar-collapse {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+}
+
+.cafe-name {
+    text-align: center;
+    flex: 1;
+    position: relative;
+}
+
+.cafe-name h1 {
+    font-family: 'Edwardian Script ITC', cursive;
+    font-size: 72px;
+    color: rgb(247, 243, 243);
+    margin: 0;
+}
+
+/* Navbar Icons */
+.navbar-nav {
+    display: flex;
+    flex: 0 0 auto;
+    margin-left: auto;
+}
+
+.icon {
+    height: 30px; /* Adjust as needed */
+    margin: 0 10px;
+}
+
+/* Menu Section */
+.menu-section {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.menu-section h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    border-bottom: 2px solid #ddd;
+    display: inline-block;
+}
+
+/* Hero Section (Carousel) */
+.carousel-item {
+    height: 80vh;
+    min-height: 400px;
+    background: no-repeat center center scroll;
+    background-size: cover;
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.carousel-caption h3 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.carousel-caption p {
+    font-size: 1.25rem;
+    color: white;
+}
+
+/* Footer Styles */
+.footer {
+    background-color: #c4b5a4; /* Mushroom color */
+    padding: 20px 0;
+    font-size: 14px;
+    color: white;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer p {
+    margin-top: 10px;
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cafe-name h1 {
+        font-size: 36px; /* Smaller font size for mobile devices */
+    }
+
+    .carousel-caption h3 {
+        font-size: 1.75rem;
+    }
+
+    .carousel-caption p {
+        font-size: 1rem;
+    }
+}
