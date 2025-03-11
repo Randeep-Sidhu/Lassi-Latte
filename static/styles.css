@@ -1,6 +1,14 @@
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+main {
+    flex: 1;
 }
 
 /* Navbar Styles (Header) */
@@ -99,6 +107,8 @@ body {
     padding: 20px 0;
     font-size: 14px;
     color: white;
+    text-align: center;
+    margin-top: auto;
 }
 
 .footer a {
