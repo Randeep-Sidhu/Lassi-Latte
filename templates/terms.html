@@ -6,16 +6,81 @@
     <title>Lassi & Latte - Terms & Conditions</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .terms-content {
+            background: #fdf4e3;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .terms-content h2 {
+            color: #5a4630;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .terms-content p {
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        /* Styled Privacy Policy Modal */
+.modal-content {
+    background: #fdf4e3;
+    border-radius: 12px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    border: none;
+    padding: 20px;
+}
+
+.modal-header {
+    background: #5a4630;
+    color: white;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 15px;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-body {
+    font-size: 1.1rem;
+    color: #333;
+    padding: 15px;
+    line-height: 1.5;
+}
+
+.modal-footer {
+    background: #f7e1c1;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 10px;
+    text-align: center;
+}
+
+.btn-secondary {
+    background: #5a4630;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover {
+    background: #8a6d49;
+}
+
+    </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo"></a>
         <div class="navbar-collapse collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <!-- This will leave space for the cafe name to be centered -->
-            </ul>
-            <!-- Cafe Name -->
+            <ul class="navbar-nav mr-auto"></ul>
             <div class="cafe-name">
                 <h1>Lassi & Latte</h1>
             </div>
@@ -33,30 +98,66 @@
         </div>
     </nav>
     
-    <div class="container"></div>
-        <h1>Terms & Conditions</h1>
-        <p>Welcome to Lassi & Latte! Please review our terms and conditions carefully. By accessing or using our website, you agree to be bound by these terms.</p>
-        <p>1. **Acceptance of Terms**: By accessing or using our website, you agree to these terms and conditions. If you do not agree, please do not use our site.</p>
-        <p>2. **Changes to Terms**: We may update these terms from time to time. Continued use of the website constitutes acceptance of any changes.</p>
-        <p>3. **Privacy Policy**: Our privacy policy outlines how we handle your personal information. By using our site, you agree to our privacy policy.</p>
+    <div class="container">
+        <div class="terms-content">
+            <h1>Terms & Conditions</h1>
+            <p>Welcome to Lassi & Latte! By using our website, you agree to the following terms and conditions. Please review them carefully.</p>
+            
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing or using our website, you acknowledge that you have read, understood, and agreed to these terms. If you do not agree, please refrain from using our services.</p>
+            
+            <h2>2. Changes to Terms</h2>
+            <p>We may update these terms periodically. Your continued use of the website after changes are made signifies your acceptance of the updated terms.</p>
+            
+            <h2>3. Privacy Policy</h2>
+            <p>Our <a href="#" data-toggle="modal" data-target="#privacyModal">Privacy Policy</a> explains how we collect, use, and protect your personal information. By using our website, you consent to our data practices.</p>
+            
+            <h2>4. Ordering and Payments</h2>
+            <p>Orders placed through our website are subject to availability. We accept payments digitally or Cash at the counter. All transactions must be completed before order processing.</p>
+            
+            <h2>5. Refunds and Cancellations</h2>
+            <p>Refunds are available only under specific conditions. Orders can be canceled within 10 minutes of placement. For refund requests, please contact our support team.</p>
+            
+            <h2>6. User Conduct</h2>
+            <p>Users must provide accurate information and refrain from any fraudulent activities. We reserve the right to restrict access to our website if we detect any misuse.</p>
+            
+            <h2>7. Contact Information</h2>
+            <p>If you have any questions regarding these terms, feel free to <a href="{{ url_for('contact') }}">contact us</a>.</p>
+        </div>
     </div>
 
+    <!-- Privacy Policy Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" role="dialog" aria-labelledby="privacyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
+                    
+                </div>
+                <div class="modal-body">
+                    <p>At Lassi & Latte, we respect your privacy. We collect your personal data only to enhance your experience and provide our services effectively. We do not sell or share your information with third parties. By using our website, you agree to our data handling practices.</p>
+                    <p>If you have any concerns regarding privacy, please contact us at support@lassiandlatte.com.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer text-center py-3">
         <div class="container">
             <a href="{{ url_for('about') }}">About Us</a> | 
             <a href="{{ url_for('contact') }}">Contact Us</a> | 
-            <a href="{{ url_for('careers') }}">Careers</a> | 
-            <a href="{{ url_for('feedback') }}">Feedback</a> | 
+            <a href="{{ url_for('careers') }}">Careers</a> |  
             <a href="{{ url_for('terms') }}">Terms & Conditions</a>
-            <p>&copy; 2024 Lassi & Latte. All Rights Reserved.</p>
+            <p>&copy; 2025 Lassi & Latte. All Rights Reserved.</p>
         </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

@@ -17,6 +17,7 @@
     margin-top: 40px;
 }
 
+/* Team Card Styling */
 .team-card {
     background: #fdf4e3;
     padding: 15px;
@@ -24,16 +25,24 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
     margin-bottom: 20px;
     text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
+/* Hover Effect: Move Up */
+.team-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Team Image Styling */
 .team-img {
     width: 100%;
-    max-height: 250px; /* Changed to max-height for better scaling */
+    max-height: 250px; /* Ensures image scales properly */
     object-fit: cover;
     border-radius: 10px;
 }
 
-
+/* Team Member Name */
 .team-card h4 {
     margin-top: 10px;
     font-size: 1.5rem;
@@ -41,14 +50,16 @@
     color: #5a4630;
 }
 
+/* Team Member Role */
 .team-card p {
     font-size: 1rem;
     color: #333;
 }
 
+
 /* Our Story */
 .story-section {
-    background-color: #fff;
+    background-color: #9c6035;
     padding: 30px;
     margin: 20px auto;
     border-radius: 10px;
@@ -59,57 +70,6 @@
 .story-section h2 {
     font-size: 2rem;
     color: #5a4630;
-}
-
-/* Customer Love Section */
-.love-card {
-    background: #fdf4e3; /* Light beige background */
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
-    margin: auto;
-    text-align: center;
-    width: 100%; /* Adjust for responsiveness */
-    max-width: 350px; /* Keeps the card compact */
-}
-
-.love-img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.love-card h4 {
-    margin-top: 10px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #5a4630;
-}
-
-.love-card p {
-    font-size: 1rem;
-    color: #333;
-    font-style: italic;
-}
-
-
-
-
-/* Mission & Vision */
-.mission-vision {
-    padding: 30px;
-    text-align: center;
-}
-
-.mission-vision h2 {
-    font-size: 2rem;
-    color: #5a4630;
-}
-
-.mission-vision p {
-    font-size: 1.1rem;
-    color: #555;
 }
 
 /* Responsive Adjustments */
@@ -177,31 +137,9 @@
         <h2>Our Story</h2>
         <div class="card mx-auto" style="max-width: 800px;">
             <div class="card-body">
-                <p>Lassi & Latte started with a passion for blending tradition with modern flavors. Our cafe is a perfect place to enjoy authentic beverages and delicious snacks. We believe in using the freshest ingredients to craft the best experience for our customers.</p>
+                <p>Lassi & Latte started with a passion for blending tradition with modern flavours. Our cafe is a perfect place to enjoy authentic beverages and delicious snacks. We believe in using the freshest ingredients to craft the best experience for our customers.</p>
             </div>
         </div>
-    </div>
-
-
-    <!-- Customer Love Section -->
-<div class="container text-center mt-5">
-    <h2>Customer Love</h2>
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="love-card">
-                <img src="{{ url_for('static', filename='couple.jpeg') }}" alt="Lovely Couple" class="love-img">
-                <h4>Ansh & Bhumika</h4>
-                <p>"Love brewed over coffee, just like our sweetest memories." ☕❤️</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-    <!-- Mission & Vision Section -->
-    <div class="container text-center mt-5 mb-5">
-        <h2>Our Mission & Vision</h2>
-        <p>Our mission is to bring joy through authentic and innovative beverages. We envision a world where every sip tells a story and every visit feels like home.</p>
     </div>
 
     <!-- Footer -->
@@ -209,10 +147,9 @@
         <div class="container">
             <a href="{{ url_for('about') }}">About Us</a> | 
             <a href="{{ url_for('contact') }}">Contact Us</a> | 
-            <a href="{{ url_for('careers') }}">Careers</a> | 
-            <a href="{{ url_for('feedback') }}">Feedback</a> | 
+            <a href="{{ url_for('careers') }}">Careers</a> |  
             <a href="{{ url_for('terms') }}">Terms & Conditions</a>
-            <p>&copy; 2024 Lassi & Latte. All Rights Reserved.</p>
+            <p>&copy; 2025 Lassi & Latte. All Rights Reserved.</p>
         </div>
     </footer>
 

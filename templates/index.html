@@ -36,11 +36,6 @@
     </nav>
 
     <main>
-        <!-- Menu Section -->
-        <div class="menu-section text-center">
-            <h2>Menu</h2>
-        </div>
-
         <!-- Carousel (Image Slider) -->
         <div id="heroCarousel" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
@@ -56,11 +51,10 @@
                 <div class="carousel-item active">
                     <img src="{{ url_for('static', filename='hero1.jpg') }}" alt="Image 1" class="d-block w-100">
                     <div class="carousel-caption">
-                        <h3>Welcome to My Cafe</h3>
+                        <h3>Welcome</h3>
                         <p>Experience the best coffee in town!</p>
                     </div>
                 </div>
-
                 <div class="carousel-item">
                     <img src="{{ url_for('static', filename='hero2.jpg') }}" alt="Image 2" class="d-block w-100">
                     <div class="carousel-caption">
@@ -68,7 +62,6 @@
                         <p>Enjoy our selection of pastries and snacks.</p>
                     </div>
                 </div>
-
                 <div class="carousel-item">
                     <img src="{{ url_for('static', filename='hero3.jpg') }}" alt="Image 3" class="d-block w-100">
                     <div class="carousel-caption">
@@ -76,7 +69,6 @@
                         <p>Relax and unwind in a comfortable setting.</p>
                     </div>
                 </div>
-
                 <div class="carousel-item">
                     <img src="{{ url_for('static', filename='hero4.jpg') }}" alt="Image 4" class="d-block w-100">
                     <div class="carousel-caption">
@@ -94,6 +86,102 @@
                 <span class="carousel-control-next-icon"></span>
             </a>
         </div>
+
+
+            <!-- Feature Cards Section -->
+        <section class="feature-cards container text-center my-5">
+            <h2 class="section-title">Our Specials</h2>
+                 <div class="row">
+                    <!-- Bestseller -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="{{ url_for('static', filename='bestseller.jpg') }}" class="card-img-top" alt="Bestseller">
+                                <div class="card-body">
+                                    <h5 class="card-title">Bestseller</h5>
+                                    <p class="product-name">Cappuccino</p>
+                                    <p class="card-text">Our top-rated drink, loved by everyone!</p>
+                                </div>
+                        </div>
+                    </div>
+                    <!-- New Arrival -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="{{ url_for('static', filename='new-arrival.jpg') }}" class="card-img-top" alt="New Arrival">
+                                <div class="card-body">
+                                    <h5 class="card-title">New Arrival</h5>
+                                    <p class="product-name">Mango Lassi</p>
+                                    <p class="card-text">Try our latest flavor, a delightful surprise!</p>
+                                </div>
+                        </div>
+                    </div>
+                    <!-- Seasonal Drink -->
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="{{ url_for('static', filename='seasonal.jpg') }}" class="card-img-top" alt="Seasonal Special">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Seasonal Special</h5>
+                                        <p class="product-name">Gajar Ka Halwa</p>
+                                        <p class="card-text">Enjoy a limited-time seasonal treat!</p>
+                                    </div>
+                            </div>
+                        </div>
+                </div>
+        </section>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <p class="banner-quote">"Every sip, every bite—crafted with love and tradition. Indulge in the perfect blend of flavors!"</p>
+            </div>
+        </section>
+
+        <!-- Category Grid -->
+        <div class="container category-grid text-center">
+            <h2 class="section-title">Explore Our Menu</h2>
+                <div class="row">
+                    <!-- Drinks -->
+                        <div class="col-md-4">
+                            <div class="category-card">
+                                <img src="{{ url_for('static', filename='drinks.jpg') }}" alt="Drinks">
+                                <h3>Drinks</h3>
+                                <p>Refreshing lassi, coffees, and coolers.</p>
+                                <a href="#" class="btn btn-primary disabled">View</a>
+                            </div>
+                        </div>
+                    <!-- Snacks -->
+                        <div class="col-md-4">
+                            <div class="category-card">
+                                <img src="{{ url_for('static', filename='snacks.jpg') }}" alt="Snacks">
+                                <h3>Snacks</h3>
+                                <p>Delicious quick bites and light meals.</p>
+                                <a href="#" class="btn btn-primary disabled">View</a>
+                            </div>
+                        </div>
+                    <!-- Desserts -->
+                        <div class="col-md-4">
+                            <div class="category-card">
+                                <img src="{{ url_for('static', filename='desserts.jpg') }}" alt="Desserts">
+                                <h3>Desserts</h3>
+                                <p>Sweet treats to satisfy your cravings.</p>
+                                <a href="#" class="btn btn-primary disabled">View</a>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    <!-- Customer Love Section -->
+    <div class="container text-center mt-5">
+        <h2>What Our Customers Say</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="love-card">
+                    <img src="{{ url_for('static', filename='couple.jpeg') }}" alt="Lovely Couple" class="love-img">
+                    <h4>Ansh & Bhumika</h4>
+                    <p>"Love brewed over coffee, just like our sweetest memories." ☕❤️</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </main>
 
     <!-- Footer -->
@@ -101,10 +189,9 @@
         <div class="container">
             <a href="{{ url_for('about') }}">About Us</a> | 
             <a href="{{ url_for('contact') }}">Contact Us</a> | 
-            <a href="{{ url_for('careers') }}">Careers</a> | 
-            <a href="{{ url_for('feedback') }}">Feedback</a> | 
+            <a href="{{ url_for('careers') }}">Careers</a> |  
             <a href="{{ url_for('terms') }}">Terms & Conditions</a>
-            <p>&copy; 2024 Lassi & Latte. All Rights Reserved.</p>
+            <p>&copy; 2025 Lassi & Latte. All Rights Reserved.</p>
         </div>
     </footer>
 

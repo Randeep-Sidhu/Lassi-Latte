@@ -55,7 +55,40 @@
         }
 
         #send-message:enabled {
-            background-color: #d2691e;
+            background-color: #ab6431;
+            cursor: pointer;
+        }
+
+        /* Feedback Container */
+        .feedback-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fdf4e3;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .feedback-container h2 {
+            color: #5a4630;
+            font-weight: bold;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        /* Submit Button */
+        #submit-feedback {
+            background-color: #5a4630;
+            color: white;
+            border: none;
+            cursor: not-allowed;
+        }
+
+        #submit-feedback:enabled {
+            background-color: #ab6431;
             cursor: pointer;
         }
     </style>
@@ -163,15 +196,71 @@
         });
     </script>
 
+    <!-- Feedback Form -->
+    <div class="feedback-container">
+        <h2>We’d Love to Hear From You</h2>
+        <form id="feedback-form">
+            <div class="form-group">
+                <label for="feedback">Feedback Please! <span class="required"></span></label>
+                <textarea id="feedback" class="form-control" rows="4" required></textarea>
+            </div>
+            
+            <button id="submit-feedback" type="submit" class="btn btn-block" disabled>Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Feedback validation and enabling button
+        const feedbackInput = document.getElementById('feedback');
+        const submitFeedbackBtn = document.getElementById('submit-feedback');
+
+        function checkFeedback() {
+            if (feedbackInput.value.trim()) {
+                submitFeedbackBtn.disabled = false;
+            } else {
+                submitFeedbackBtn.disabled = true;
+            }
+        }
+
+        feedbackInput.addEventListener('input', checkFeedback);
+
+        document.getElementById('feedback-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const feedback = feedbackInput.value.trim();
+
+            if (!feedback) {
+                alert('Please enter your feedback');
+                return;
+            }
+
+            fetch('/feedback', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ feedback }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Thank you for your feedback!');
+                    feedbackInput.value = '';
+                    submitFeedbackBtn.disabled = true;
+                } else {
+                    alert('Something went wrong. Please try again.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+
     <!-- Footer -->
     <footer class="footer text-center py-3">
         <div class="container">
             <a href="{{ url_for('about') }}">About Us</a> | 
             <a href="{{ url_for('contact') }}">Contact Us</a> | 
             <a href="{{ url_for('careers') }}">Careers</a> | 
-            <a href="{{ url_for('feedback') }}">Feedback</a> | 
             <a href="{{ url_for('terms') }}">Terms & Conditions</a>
-            <p>&copy; 2024 Lassi & Latte. All Rights Reserved.</p>
+            <p>&copy; 2025 Lassi & Latte. All Rights Reserved.</p>
         </div>
     </footer>
 
