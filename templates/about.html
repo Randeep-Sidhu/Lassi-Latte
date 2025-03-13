@@ -3,40 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lassi & Latte - About Us</title>
+    <title>About Us - Lassi & Latte</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+
+
+
+
+
+/* Meet the Team Section */
+.team-section {
+    margin-top: 40px;
+}
+
+.team-card {
+    background: #fdf4e3;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.team-img {
+    width: 100%;
+    max-height: 250px; /* Changed to max-height for better scaling */
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+.team-card h4 {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #5a4630;
+}
+
+.team-card p {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Our Story */
+.story-section {
+    background-color: #fff;
+    padding: 30px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.story-section h2 {
+    font-size: 2rem;
+    color: #5a4630;
+}
+
+/* Customer Love Section */
+.love-card {
+    background: #fdf4e3; /* Light beige background */
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+    margin: auto;
+    text-align: center;
+    width: 100%; /* Adjust for responsiveness */
+    max-width: 350px; /* Keeps the card compact */
+}
+
+.love-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.love-card h4 {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #5a4630;
+}
+
+.love-card p {
+    font-size: 1rem;
+    color: #333;
+    font-style: italic;
+}
+
+
+
+
+/* Mission & Vision */
+.mission-vision {
+    padding: 30px;
+    text-align: center;
+}
+
+.mission-vision h2 {
+    font-size: 2rem;
+    color: #5a4630;
+}
+
+.mission-vision p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .banner {
+        height: 200px;
+        font-size: 1.5rem;
+    }
+    .team-img {
+        max-height: 200px; /* Smaller images on mobile */
+    }
+    .testimonials .card {
+        margin: 10px; /* Reduce margin on smaller screens */
+    }
+}</style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo"></a>
-        <div class="navbar-collapse collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <!-- This will leave space for the cafe name to be centered -->
-            </ul>
-            <!-- Cafe Name -->
-            <div class="cafe-name">
-                <h1>Lassi & Latte</h1>
-            </div>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('basket') }}"><img src="{{ url_for('static', filename='basket.png') }}" alt="Basket" class="icon"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('account') }}"><img src="{{ url_for('static', filename='account.png') }}" alt="Account" class="icon"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='home.png') }}" alt="Home" class="icon"></a>
-                </li>
-            </ul>
+        <div class="cafe-name">
+            <h1>Lassi & Latte</h1>
         </div>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('basket') }}"><img src="{{ url_for('static', filename='basket.png') }}" alt="Basket" class="icon"></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('account') }}"><img src="{{ url_for('static', filename='account.png') }}" alt="Account" class="icon"></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='home.png') }}" alt="Home" class="icon"></a></li>
+        </ul>
     </nav>
 
-    <div class="container">
-        <h1>About Us</h1>
-        <p>Welcome to Lassi & Latte, where we offer the finest coffee and delicious pastries. Our cafe is committed to providing a warm and inviting atmosphere for all our customers.</p>
-        <p>Founded in 2024, our mission is to serve high-quality beverages and create a memorable experience for every guest who walks through our doors.</p>
+
+    
+
+    <!-- Meet the Team Section -->
+    <div class="container team-section text-center mt-5">
+        <h2>Meet Our Team</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="team-card">
+                    <img src="{{ url_for('static', filename='founder.jpeg') }}" alt="Founder" class="team-img">
+                    <h4>Randeep Singh</h4>
+                    <p>Founder & CEO</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="team-card">
+                    <img src="{{ url_for('static', filename='chef.jpeg') }}" alt="Head Chef" class="team-img">
+                    <h4>Rahul Singh</h4>
+                    <p>Head Chef</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="team-card">
+                    <img src="{{ url_for('static', filename='manager.jpeg') }}" alt="Manager" class="team-img">
+                    <h4>Aman Singh</h4>
+                    <p>Manager</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Our Story Section -->
+    <div class="container text-center mt-5">
+        <h2>Our Story</h2>
+        <div class="card mx-auto" style="max-width: 800px;">
+            <div class="card-body">
+                <p>Lassi & Latte started with a passion for blending tradition with modern flavors. Our cafe is a perfect place to enjoy authentic beverages and delicious snacks. We believe in using the freshest ingredients to craft the best experience for our customers.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Customer Love Section -->
+<div class="container text-center mt-5">
+    <h2>Customer Love</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="love-card">
+                <img src="{{ url_for('static', filename='couple.jpeg') }}" alt="Lovely Couple" class="love-img">
+                <h4>Ansh & Bhumika</h4>
+                <p>"Love brewed over coffee, just like our sweetest memories." ☕❤️</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Mission & Vision Section -->
+    <div class="container text-center mt-5 mb-5">
+        <h2>Our Mission & Vision</h2>
+        <p>Our mission is to bring joy through authentic and innovative beverages. We envision a world where every sip tells a story and every visit feels like home.</p>
     </div>
 
     <!-- Footer -->
@@ -54,6 +219,5 @@
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
