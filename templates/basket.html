@@ -1,88 +1,173 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lassi & Latte - Basket</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo"></a>
-        <div class="navbar-collapse collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <!-- This will leave space for the cafe name to be centered -->
-            </ul>
-            <!-- Cafe Name -->
-            <div class="cafe-name">
-                <h1>Lassi & Latte</h1>
-            </div>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('basket') }}"><img src="{{ url_for('static', filename='basket.png') }}" alt="Basket" class="icon"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('account') }}"><img src="{{ url_for('static', filename='account.png') }}" alt="Account" class="icon"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='home.png') }}" alt="Home" class="icon"></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
+{% block title %}Lassi & Latte - Basket{% endblock %}
 
-    <div class="cart-container">
+{% block head %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom button style to match cafe theme with higher specificity */
+        .btn-custom {
+            background-color: #5a4630 !important; /* Cafe brown color with !important to override Bootstrap */
+            color: white !important;
+            border: none !important;
+            transition: background-color 0.3s !important;
+        }
+
+        .btn-custom:hover {
+            background-color: #6f4f28 !important; /* Slightly lighter brown for hover */
+        }
+
+        /* Ensure the button block styling is consistent */
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-4 basket-page">
         <h2>Your Basket</h2>
-        <ul id="cart-items"></ul>
-        <p>Total: <span id="total-price">$0.00</span></p>
-        <button id="checkout-btn">Proceed to Checkout</button>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="basket-items"></tbody>
+        </table>
+        <h4 class="text-right">Total: <span id="total-price">₹0.00</span></h4>
+
+        <div class="checkout-form">
+            <h3>Select Payment Method</h3>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="inPerson" value="in_person" checked>
+                <label class="form-check-label" for="inPerson">
+                    In-Person Payment at the Counter
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="cod" value="cod">
+                <label class="form-check-label" for="cod">
+                    Cash on Delivery (COD)
+                </label>
+            </div>
+            <p class="delivery-warning" id="deliveryWarning">
+                <strong>Note:</strong> We only deliver within a 2km range from our cafe. Please ensure you are within this range. Orders outside this range may be cancelled by our staff.
+            </p>
+            <button id="checkout-btn" class="btn btn-custom btn-block" style="background-color: #5a4630; color: white;">Proceed to Checkout</button>
+        </div>
     </div>
+{% endblock %}
 
+{% block scripts %}
     <script>
-        let cart = [];
-        
-        function addItemToCart(item) {
-            cart.push(item);
-            renderCart();
-        }
-        
-        function removeItemFromCart(index) {
-            cart.splice(index, 1);
-            renderCart();
-        }
-
-        function renderCart() {
-            const cartItems = document.getElementById('cart-items');
-            const totalPrice = document.getElementById('total-price');
-            let total = 0;
-
-            cartItems.innerHTML = '';
-            cart.forEach((item, index) => {
-                cartItems.innerHTML += `<li>${item.name} - $${item.price} <button onclick="removeItemFromCart(${index})">Remove</button></li>`;
-                total += item.price;
-            });
-
-            totalPrice.textContent = `$${total.toFixed(2)}`;
-        }
+        window.userId = {{ session.get('user_id') | default(0) | tojson }};
     </script>
 
-    <!-- Footer -->
-    <footer class="footer text-center py-3">
-        <div class="container">
-            <a href="{{ url_for('about') }}">About Us</a> | 
-            <a href="{{ url_for('contact') }}">Contact Us</a> | 
-            <a href="{{ url_for('careers') }}">Careers</a> |  
-            <a href="{{ url_for('terms') }}">Terms & Conditions</a>
-            <p>&copy; 2025 Lassi & Latte. All Rights Reserved.</p>
-        </div>
-    </footer>
+    <script>
+        function loadBasket() {
+            let basket = JSON.parse(localStorage.getItem("basket") || '[]');
+            let basketContainer = document.getElementById("basket-items");
+            let totalPrice = 0;
+            basketContainer.innerHTML = "";
 
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+            // Group items by name and calculate quantities
+            let groupedItems = basket.reduce((acc, item) => {
+                if (!acc[item.name]) {
+                    acc[item.name] = { ...item, quantity: 0, indices: [] };
+                }
+                acc[item.name].quantity += 1;
+                acc[item.name].indices.push(basket.indexOf(item));
+                return acc;
+            }, {});
 
-</body>
-</html>
+            // Convert grouped items to array for display
+            let itemsArray = Object.values(groupedItems);
+            itemsArray.forEach((item, arrayIndex) => {
+                let itemTotal = (parseFloat(item.price) * item.quantity).toFixed(2);
+                let row = `<tr>
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>₹${parseFloat(item.price).toFixed(2)}</td>
+                    <td>₹${itemTotal}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="removeItem(${arrayIndex}, ${JSON.stringify(item.indices)})">Remove</button></td>
+                </tr>`;
+                basketContainer.innerHTML += row;
+                totalPrice += parseFloat(itemTotal);
+            });
+
+            document.getElementById("total-price").textContent = `₹${totalPrice.toFixed(2)}`;
+            return totalPrice;
+        }
+
+        function removeItem(arrayIndex, indices) {
+            let basket = JSON.parse(localStorage.getItem("basket") || '[]');
+            // Remove all items with the given name by filtering out the indices
+            indices.sort((a, b) => b - a); // Sort indices in descending order to avoid index shifting
+            indices.forEach(index => basket.splice(index, 1));
+            localStorage.setItem("basket", JSON.stringify(basket));
+            loadBasket();
+        }
+
+        function checkout() {
+            if (!window.userId) {
+                window.location.href = "{{ url_for('account') }}?redirect=/basket";
+                return;
+            }
+
+            const basket = JSON.parse(localStorage.getItem("basket") || '[]');
+            if (basket.length === 0) {
+                alert("Your basket is empty!");
+                return;
+            }
+
+            const totalPrice = loadBasket();
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            fetch('/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: window.userId,
+                    basket: basket,
+                    total_price: totalPrice,
+                    payment_method: paymentMethod
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    localStorage.removeItem("basket");
+                    window.location.href = `/confirmation?order_id=${data.order_id}`;
+                } else {
+                    alert('Checkout failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during checkout.');
+            });
+        }
+
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const deliveryWarning = document.getElementById("deliveryWarning");
+                if (this.value === 'cod') {
+                    deliveryWarning.style.display = 'block';
+                } else {
+                    deliveryWarning.style.display = 'none';
+                }
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", loadBasket);
+        document.getElementById("checkout-btn").addEventListener("click", checkout);
+    </script>
+{% endblock %}

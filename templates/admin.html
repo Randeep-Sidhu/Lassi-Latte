@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Lassi & Latte - Admin Dashboard{% endblock %}
+
+{% block head %}
+    <style>
+        /* Admin Dashboard Styles */
+        .admin-container {
+            margin-top: 2rem;
+        }
+
+        h2 {
+            color: #5a4630;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .table {
+            background-color: #fdf4e3;
+            border-radius: 8px;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        .status-select {
+            width: 150px;
+        }
+
+        .btn-update {
+            background-color: #5a4630;
+            color: white;
+            border: none;
+        }
+
+        .btn-update:hover {
+            background-color: #6f4f28;
+        }
+
+        /* New Button Style for Contact/Feedback Dashboard */
+        .btn-contact {
+            background-color: #5a4630;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-contact:hover {
+            background-color: #6f4f28;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container admin-container">
+        <h2>Admin Dashboard - Orders</h2>
+        
+        <!-- New Button to Navigate to Contact/Feedback Dashboard -->
+        <a href="{{ url_for('admin_contact_dashboard') }}" class="btn-contact">View Contact & Feedback Messages</a>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Payment Method</th>
+                    <th>Status</th>
+                    <th>Placed At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.first_name }} {{ order.last_name }}</td>
+                        <td>{{ order.email }}</td>
+                        <td>{{ order.item_name }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>₹{{ order.total_price }}</td>
+                        <td>{{ "In-Person Payment at the Counter" if order.payment_method == 'in_person' else "Cash on Delivery (COD)" }}</td>
+                        <td>
+                            <select class="form-control status-select" data-order-id="{{ order.id }}">
+                                <option value="pending" {% if order.order_status == 'pending' %}selected{% endif %}>Pending</option>
+                                <option value="completed" {% if order.order_status == 'completed' %}selected{% endif %}>Completed</option>
+                                <option value="cancelled" {% if order.order_status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                            </select>
+                        </td>
+                        <td>{{ order.created_at }}</td>
+                        <td>
+                            <button class="btn btn-update btn-sm update-status-btn" data-order-id="{{ order.id }}">Update Status</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const updateButtons = document.querySelectorAll(".update-status-btn");
+            updateButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const orderId = this.getAttribute("data-order-id");
+                    const select = document.querySelector(`select[data-order-id="${orderId}"]`);
+                    const newStatus = select.value;
+
+                    fetch(`/admin/update_order_status/${orderId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ status: newStatus })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            alert('Order status updated successfully!');
+                        } else {
+                            alert('Failed to update order status: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while updating the order status.');
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}

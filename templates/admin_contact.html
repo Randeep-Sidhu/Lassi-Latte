@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Lassi & Latte - Admin Contact Dashboard{% endblock %}
+
+{% block head %}
+    <style>
+        /* Admin Contact Dashboard Styles */
+        .admin-container {
+            margin-top: 2rem;
+        }
+
+        h2 {
+            color: #5a4630;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        h3 {
+            color: #5a4630;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .table {
+            background-color: #fdf4e3;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        /* New Button Style for Back to Orders */
+        .btn-contact {
+            background-color: #5a4630;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-contact:hover {
+            background-color: #6f4f28;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container admin-container">
+        <h2>Admin Contact Dashboard</h2>
+
+        <!-- New Button to Navigate Back to Orders Dashboard -->
+        <a href="{{ url_for('admin_dashboard') }}" class="btn-contact">Back to Orders</a>
+
+        <!-- Contact Messages Section -->
+        <h3>Contact Us Messages</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                    <th>Submitted At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for message in contact_messages %}
+                    <tr>
+                        <td>{{ message.id }}</td>
+                        <td>{{ message.name }}</td>
+                        <td>{{ message.email }}</td>
+                        <td>{{ message.message }}</td>
+                        <td>{{ message.created_at }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Feedback Section -->
+        <h3>Feedback</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Feedback</th>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Submitted At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fb in feedback %}
+                    <tr>
+                        <td>{{ fb.id }}</td>
+                        <td>{{ fb.feedback }}</td>
+                        <td>
+                            {% if fb.user_id %}
+                                {{ fb.first_name }} {{ fb.last_name }}
+                            {% else %}
+                                Anonymous
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if fb.email %}
+                                {{ fb.email }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td>{{ fb.created_at }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

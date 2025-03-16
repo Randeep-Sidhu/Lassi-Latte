@@ -1,173 +1,151 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Cafe Website</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo"></a>
-        <div class="navbar-collapse collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <!-- This will leave space for the cafe name to be centered -->
-            </ul>
-            <!-- Cafe Name -->
-            <div class="cafe-name">
-                <h1>Lassi & Latte</h1>
-            </div>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('basket') }}"><img src="{{ url_for('static', filename='basket.png') }}" alt="Basket" class="icon"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('account') }}"><img src="{{ url_for('static', filename='account.png') }}" alt="Account" class="icon"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='home.png') }}" alt="Home" class="icon"></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
-    <main>
-        <!-- Carousel (Image Slider) -->
-        <div id="heroCarousel" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#heroCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#heroCarousel" data-slide-to="1"></li>
-                <li data-target="#heroCarousel" data-slide-to="2"></li>
-                <li data-target="#heroCarousel" data-slide-to="3"></li>
-            </ol>
+{% block title %}My Cafe Website{% endblock %}
 
-            <!-- Carousel Items -->
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="{{ url_for('static', filename='hero1.jpg') }}" alt="Image 1" class="d-block w-100">
-                    <div class="carousel-caption">
-                        <h3>Welcome</h3>
-                        <p>Experience the best coffee in town!</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ url_for('static', filename='hero2.jpg') }}" alt="Image 2" class="d-block w-100">
-                    <div class="carousel-caption">
-                        <h3>Delicious Treats</h3>
-                        <p>Enjoy our selection of pastries and snacks.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ url_for('static', filename='hero3.jpg') }}" alt="Image 3" class="d-block w-100">
-                    <div class="carousel-caption">
-                        <h3>Cozy Ambiance</h3>
-                        <p>Relax and unwind in a comfortable setting.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ url_for('static', filename='hero4.jpg') }}" alt="Image 4" class="d-block w-100">
-                    <div class="carousel-caption">
-                        <h3>Takeout & Delivery</h3>
-                        <p>Order online for takeout or delivery!</p>
-                    </div>
+{% block head %}
+    <!-- Any additional head content specific to index.html can go here -->
+{% endblock %}
+
+{% block content %}
+    <!-- Welcome Message -->
+    {% if first_name and last_name %}
+    <div class="container text-center mt-3">
+        <h3 class="welcome-message">Welcome, {{ first_name }} {{ last_name }}!</h3>
+    </div>
+    {% endif %}
+
+    <!-- Carousel (Image Slider) -->
+    <div id="heroCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#heroCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#heroCarousel" data-slide-to="1"></li>
+            <li data-target="#heroCarousel" data-slide-to="2"></li>
+            <li data-target="#heroCarousel" data-slide-to="3"></li>
+        </ol>
+
+        <!-- Carousel Items -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{{ url_for('static', filename='hero1.jpg') }}" alt="Image 1" class="d-block w-100">
+                <div class="carousel-caption">
+                    <h3>Welcome</h3>
+                    <p>Experience the best coffee in town!</p>
                 </div>
             </div>
-
-            <!-- Controls -->
-            <a class="carousel-control-prev" href="#heroCarousel" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#heroCarousel" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </a>
-        </div>
-
-
-            <!-- Feature Cards Section -->
-        <section class="feature-cards container text-center my-5">
-            <h2 class="section-title">Our Specials</h2>
-                 <div class="row">
-                    <!-- Bestseller -->
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img src="{{ url_for('static', filename='bestseller.jpg') }}" class="card-img-top" alt="Bestseller">
-                                <div class="card-body">
-                                    <h5 class="card-title">Bestseller</h5>
-                                    <p class="product-name">Cappuccino</p>
-                                    <p class="card-text">Our top-rated drink, loved by everyone!</p>
-                                </div>
-                        </div>
-                    </div>
-                    <!-- New Arrival -->
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img src="{{ url_for('static', filename='new-arrival.jpg') }}" class="card-img-top" alt="New Arrival">
-                                <div class="card-body">
-                                    <h5 class="card-title">New Arrival</h5>
-                                    <p class="product-name">Mango Lassi</p>
-                                    <p class="card-text">Try our latest flavor, a delightful surprise!</p>
-                                </div>
-                        </div>
-                    </div>
-                    <!-- Seasonal Drink -->
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="{{ url_for('static', filename='seasonal.jpg') }}" class="card-img-top" alt="Seasonal Special">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Seasonal Special</h5>
-                                        <p class="product-name">Gajar Ka Halwa</p>
-                                        <p class="card-text">Enjoy a limited-time seasonal treat!</p>
-                                    </div>
-                            </div>
-                        </div>
+            <div class="carousel-item">
+                <img src="{{ url_for('static', filename='hero2.jpg') }}" alt="Image 2" class="d-block w-100">
+                <div class="carousel-caption">
+                    <h3>Delicious Treats</h3>
+                    <p>Enjoy our selection of pastries and snacks.</p>
                 </div>
-        </section>
-
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <p class="banner-quote">"Every sip, every bite—crafted with love and tradition. Indulge in the perfect blend of flavors!"</p>
             </div>
-        </section>
-
-        <!-- Category Grid -->
-        <div class="container category-grid text-center">
-            <h2 class="section-title">Explore Our Menu</h2>
-                <div class="row">
-                    <!-- Drinks -->
-                        <div class="col-md-4">
-                            <div class="category-card">
-                                <img src="{{ url_for('static', filename='drinks.jpg') }}" alt="Drinks">
-                                <h3>Drinks</h3>
-                                <p>Refreshing lassi, coffees, and coolers.</p>
-                                <a href="#" class="btn btn-primary disabled">View</a>
-                            </div>
-                        </div>
-                    <!-- Snacks -->
-                        <div class="col-md-4">
-                            <div class="category-card">
-                                <img src="{{ url_for('static', filename='snacks.jpg') }}" alt="Snacks">
-                                <h3>Snacks</h3>
-                                <p>Delicious quick bites and light meals.</p>
-                                <a href="#" class="btn btn-primary disabled">View</a>
-                            </div>
-                        </div>
-                    <!-- Desserts -->
-                        <div class="col-md-4">
-                            <div class="category-card">
-                                <img src="{{ url_for('static', filename='desserts.jpg') }}" alt="Desserts">
-                                <h3>Desserts</h3>
-                                <p>Sweet treats to satisfy your cravings.</p>
-                                <a href="#" class="btn btn-primary disabled">View</a>
-                            </div>
-                        </div>
+            <div class="carousel-item">
+                <img src="{{ url_for('static', filename='hero3.jpg') }}" alt="Image 3" class="d-block w-100">
+                <div class="carousel-caption">
+                    <h3>Cozy Ambiance</h3>
+                    <p>Relax and unwind in a comfortable setting.</p>
                 </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{{ url_for('static', filename='hero4.jpg') }}" alt="Image 4" class="d-block w-100">
+                <div class="carousel-caption">
+                    <h3>Takeout & Delivery</h3>
+                    <p>Order online for takeout or delivery!</p>
+                </div>
+            </div>
         </div>
+
+        <!-- Controls -->
+        <a class="carousel-control-prev" href="#heroCarousel" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#heroCarousel" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+
+    <!-- Feature Cards Section -->
+    <section class="feature-cards container text-center my-5">
+        <h2 class="section-title">Our Specials</h2>
+        <div class="row">
+            <!-- Bestseller -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='bestseller.jpg') }}" class="card-img-top" alt="Bestseller">
+                    <div class="card-body">
+                        <h5 class="card-title">Bestseller</h5>
+                        <p class="product-name">Cappuccino</p>
+                        <p class="card-text">Our top-rated drink, loved by everyone!</p>
+                    </div>
+                </div>
+            </div>
+            <!-- New Arrival -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='new-arrival.jpg') }}" class="card-img-top" alt="New Arrival">
+                    <div class="card-body">
+                        <h5 class="card-title">New Arrival</h5>
+                        <p class="product-name">Mango Lassi</p>
+                        <p class="card-text">Try our latest flavor, a delightful surprise!</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Seasonal Drink -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='seasonal.jpg') }}" class="card-img-top" alt="Seasonal Special">
+                    <div class="card-body">
+                        <h5 class="card-title">Seasonal Special</h5>
+                        <p class="product-name">Gajar Ka Halwa</p>
+                        <p class="card-text">Enjoy a limited-time seasonal treat!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="banner-quote">"Every sip, every bite—crafted with love and tradition. Indulge in the perfect blend of flavors!"</p>
+        </div>
+    </section>
+
+    <!-- Category Grid -->
+    <div class="container category-grid text-center">
+        <h2 class="section-title">Explore Our Menu</h2>
+        <div class="row">
+            <!-- Drinks -->
+            <div class="col-md-4">
+                <div class="category-card">
+                    <img src="{{ url_for('static', filename='drinks.jpg') }}" alt="Drinks">
+                    <h3>Drinks</h3>
+                    <p>Refreshing lassi, coffees, and coolers.</p>
+                    <button class="btn" onclick="openPopup('drinksMenuPopup')">View</button>    
+                </div>
+            </div>
+            <!-- Snacks -->
+            <div class="col-md-4">
+                <div class="category-card">
+                    <img src="{{ url_for('static', filename='snacks.jpg') }}" alt="Snacks">
+                    <h3>Snacks</h3>
+                    <p>Delicious quick bites and light meals.</p>
+                    <button class="btn" onclick="openPopup('snacksMenuPopup')">View</button>
+                </div>
+            </div>
+            <!-- Desserts -->
+            <div class="col-md-4">
+                <div class="category-card">
+                    <img src="{{ url_for('static', filename='desserts.jpg') }}" alt="Desserts">
+                    <h3>Desserts</h3>
+                    <p>Sweet treats to satisfy your cravings.</p>
+                    <button class="btn" onclick="openPopup('dessertsMenuPopup')">View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Customer Love Section -->
     <div class="container text-center mt-5">
         <h2>What Our Customers Say</h2>
@@ -182,21 +160,315 @@
         </div>
     </div>
 
-    </main>
+    <!-- Drinks Menu Pop-up -->
+    <div id="drinksMenuPopup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closePopup('drinksMenuPopup')">×</span>
+            <h2 class="popup-title">Drinks Menu</h2>
 
-    <!-- Footer -->
-    <footer class="footer text-center py-3">
-        <div class="container">
-            <a href="{{ url_for('about') }}">About Us</a> | 
-            <a href="{{ url_for('contact') }}">Contact Us</a> | 
-            <a href="{{ url_for('careers') }}">Careers</a> |  
-            <a href="{{ url_for('terms') }}">Terms & Conditions</a>
-            <p>&copy; 2025 Lassi & Latte. All Rights Reserved.</p>
+            <!-- Hot Drinks Section -->
+            <h3 class="section-title">Hot Drinks</h3>
+            <table class="menu-table">
+                <tr>
+                    <td>Espresso</td>
+                    <td>Rs. 150</td>
+                    <td><button class="add-btn" data-name="Espresso" data-price="150">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Latte</td>
+                    <td>Rs. 200</td>
+                    <td><button class="add-btn" data-name="Latte" data-price="200">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Americano</td>
+                    <td>Rs. 180</td>
+                    <td><button class="add-btn" data-name="Americano" data-price="180">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Macchiato</td>
+                    <td>Rs. 220</td>
+                    <td><button class="add-btn" data-name="Macchiato" data-price="220">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Cappuccino</td>
+                    <td>Rs. 250</td>
+                    <td><button class="add-btn" data-name="Cappuccino" data-price="250">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Hot Chocolate</td>
+                    <td>Rs. 180</td>
+                    <td><button class="add-btn" data-name="Hot Chocolate" data-price="180">Add</button></td>
+                </tr>
+            </table>
+
+            <h3 class="section-title">Tea</h3>
+            <table class="menu-table">
+                <tr>
+                    <td>Masala Tea</td>
+                    <td>Rs. 120</td>
+                    <td><button class="add-btn" data-name="Masala Tea" data-price="120">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Kashmiri Pink Tea</td>
+                    <td>Rs. 300</td>
+                    <td><button class="add-btn" data-name="Kashmiri Pink Tea" data-price="300">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Black Tea</td>
+                    <td>Rs. 100</td>
+                    <td><button class="add-btn" data-name="Black Tea" data-price="100">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Green Tea</td>
+                    <td>Rs. 130</td>
+                    <td><button class="add-btn" data-name="Green Tea" data-price="130">Add</button></td>
+                </tr>
+            </table>
+
+            <!-- Cold Drinks Section -->
+            <h3 class="section-title">Cold Drinks</h3>
+            <h4 class="sub-title">Smoothies</h4>
+            <table class="menu-table">
+                <tr>
+                    <td>
+                        <strong>Berry and Banana</strong><br>
+                        <small>Strawberries, blueberries, raspberries, grapes, and banana with yogurt and honey. Topped with assorted nuts and seeds.</small>
+                    </td>
+                    <td>Rs. 350</td>
+                    <td><button class="add-btn" data-name="Berry and Banana" data-price="350">Add</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Breakfast Smoothie</strong><br>
+                        <small>Banana, papaya, strawberries, and peanut with yogurt and honey. Topped with granola.</small>
+                    </td>
+                    <td>Rs. 400</td>
+                    <td><button class="add-btn" data-name="Breakfast Smoothie" data-price="400">Add</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Green and Clean</strong><br>
+                        <small><em>SUITABLE FOR VEGANS</em> - Avocado, pineapple, green apples, cucumber, and spinach with dates and coconut milk.</small>
+                    </td>
+                    <td>Rs. 450</td>
+                    <td><button class="add-btn" data-name="Green and Clean" data-price="450">Add</button></td>
+                </tr>
+            </table>
+
+            <h4 class="sub-title">Cold Pressed Juices</h4>
+            <table class="menu-table">
+                <tr>
+                    <td>
+                        <strong>Glow</strong><br>
+                        <small>Carrot, beet, orange, ginger.</small>
+                    </td>
+                    <td>Rs. 250</td>
+                    <td><button class="add-btn" data-name="Glow" data-price="250">Add</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Clean</strong><br>
+                        <small>Pineapple, spinach, orange, and flax seeds.</small>
+                    </td>
+                    <td>Rs. 280</td>
+                    <td><button class="add-btn" data-name="Clean" data-price="280">Add</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Hydrate</strong><br>
+                        <small>Pomegranate, orange, mint.</small>
+                    </td>
+                    <td>Rs. 300</td>
+                    <td><button class="add-btn" data-name="Hydrate" data-price="300">Add</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Recharge</strong><br>
+                        <small>Kazi lemon, coconut sugar, soaked chia seeds.</small>
+                    </td>
+                    <td>Rs. 320</td>
+                    <td><button class="add-btn" data-name="Recharge" data-price="320">Add</button></td>
+                </tr>
+            </table>
+
+            <h4 class="sub-title">Lassi</h4>
+            <table class="menu-table">
+                <tr>
+                    <td>Sweet Kesar Lassi</td>
+                    <td>Rs. 300</td>
+                    <td><button class="add-btn" data-name="Sweet Kesar Lassi" data-price="300">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Mango Lassi</td>
+                    <td>Rs. 250</td>
+                    <td><button class="add-btn" data-name="Mango Lassi" data-price="250">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Chaas</td>
+                    <td>Rs. 100</td>
+                    <td><button class="add-btn" data-name="Chaas" data-price="100">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Plain Lassi</td>
+                    <td>Rs. 180</td>
+                    <td><button class="add-btn" data-name="Plain Lassi" data-price="180">Add</button></td>
+                </tr>
+            </table>
         </div>
-    </footer>
+    </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <!-- Snacks Menu Pop-up -->
+    <div id="snacksMenuPopup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closePopup('snacksMenuPopup')">×</span>
+            <h2 class="popup-title">Snacks Menu</h2>
+
+            <table class="menu-table">
+                <tr>
+                    <td>
+                        <strong>Veggie Sandwich</strong><br>
+                        <small>Freshly baked bread loaded with cucumbers, tomatoes, lettuce, and cheese, served with a side of mayo.</small>
+                    </td>
+                    <td>Rs. 180</td>
+                    <td><button class="add-btn" data-name="Veggie Sandwich" data-price="180">Add</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Cheese Corn Balls</strong><br>
+                        <small>Crispy deep-fried balls filled with melted cheese, sweet corn, and mild spices.</small>
+                    </td>
+                    <td>Rs. 220</td>
+                    <td><button class="add-btn" data-name="Cheese Corn Balls" data-price="220">Add</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Cheese Potato Balls</strong><br>
+                        <small>Golden-fried potato balls stuffed with gooey cheese and seasoned with herbs.</small>
+                    </td>
+                    <td>Rs. 200</td>
+                    <td><button class="add-btn" data-name="Cheese Potato Balls" data-price="200">Add</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Samosa Patty</strong><br>
+                        <small>Flaky and crispy samosa with a flavorful spiced potato filling.</small>
+                    </td>
+                    <td>Rs. 150</td>
+                    <td><button class="add-btn" data-name="Samosa Patty" data-price="150">Add</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Desserts Menu Pop-up -->
+    <div id="dessertsMenuPopup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closePopup('dessertsMenuPopup')">×</span>
+            <h2 class="popup-title">Desserts Menu</h2>
+
+            <table class="menu-table">
+                <tr>
+                    <td>
+                        <strong>Apple Pie</strong><br>
+                        <small>Classic apple pie with a flaky crust and spiced apple filling, served warm.</small>
+                    </td>
+                    <td>Rs. 250</td>
+                    <td><button class="add-btn" data-name="Apple Pie" data-price="250">Add</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Pumpkin Pie (Seasonal)</strong><br>
+                        <small>Rich and creamy pumpkin filling with a buttery crust, topped with whipped cream.</small>
+                    </td>
+                    <td>Rs. 300</td>
+                    <td><button class="add-btn" data-name="Pumpkin Pie (Seasonal)" data-price="300">Add</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Gajar ka Halwa (Seasonal)</strong><br>
+                        <small>Traditional Indian carrot pudding made with ghee, milk, and dry fruits.</small>
+                    </td>
+                    <td>Rs. 280</td>
+                    <td><button class="add-btn" data-name="Gajar ka Halwa (Seasonal)" data-price="280">Add</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Donuts</strong><br>
+                        <small>Soft and fluffy donuts glazed with chocolate, vanilla, or caramel.</small>
+                    </td>
+                    <td>Rs. 150</td>
+                    <td><button class="add-btn" data-name="Donuts" data-price="150">Add</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Chocolate Pastry</strong><br>
+                        <small>Decadent chocolate pastry layered with rich chocolate ganache.</small>
+                    </td>
+                    <td>Rs. 220</td>
+                    <td><button class="add-btn" data-name="Chocolate Pastry" data-price="220">Add</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // Popup functions
+        function openPopup(menuId) {
+            document.getElementById(menuId).style.display = "flex";
+        }
+
+        function closePopup(menuId) {
+            document.getElementById(menuId).style.display = "none";
+        }
+
+        // Add items to the basket
+        document.querySelectorAll(".add-btn").forEach(button => {
+            button.addEventListener("click", (event) => {
+                const button = event.target;
+                const itemName = button.getAttribute("data-name");
+                const itemPrice = parseFloat(button.getAttribute("data-price").replace(/[^0-9.]/g, ''));
+
+                let item = { name: itemName, price: itemPrice };
+
+                // Retrieve existing basket items or initialize an empty array
+                let basket = JSON.parse(localStorage.getItem("basket") || '[]');
+                basket.push(item);
+                
+                // Store updated basket back into localStorage
+                localStorage.setItem("basket", JSON.stringify(basket));
+
+                // Change button text to "Added" and style
+                button.textContent = "Added";
+                button.classList.add("btn-added");
+
+                // Revert to original state after 2 seconds
+                setTimeout(() => {
+                    button.textContent = "Add";
+                    button.classList.remove("btn-added");
+                }, 2000);
+            });
+        });
+
+        // Handle Logout
+        const logoutBtn = document.querySelector(".logout-btn");
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", async function (event) {
+                event.preventDefault();
+                try {
+                    const response = await fetch("/logout", { method: "GET" });
+                    const data = await response.json();
+                    if (data.status === 'success') {
+                        window.location.href = "/"; // Redirect immediately without alert
+                    } else {
+                        alert(data.message);
+                    }
+                } catch (error) {
+                    console.error("Logout failed:", error);
+                    alert("Error logging out. Please try again.");
+                }
+            });
+        }
+    </script>
+{% endblock %}

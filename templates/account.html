@@ -1,100 +1,200 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lassi & Latte - Account</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo"></a>
-        <div class="navbar-collapse collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <!-- This will leave space for the cafe name to be centered -->
-            </ul>
-            <!-- Cafe Name -->
-            <div class="cafe-name">
-                <h1>Lassi & Latte</h1>
-            </div>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('basket') }}"><img src="{{ url_for('static', filename='basket.png') }}" alt="Basket" class="icon"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('account') }}"><img src="{{ url_for('static', filename='account.png') }}" alt="Account" class="icon"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='home.png') }}" alt="Home" class="icon"></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
+{% block title %}Account - Lassi & Latte{% endblock %}
 
+{% block head %}
+    <!-- Page-specific styles -->
+    <style>
+        body {
+            background-color: #f8f1e5;
+            font-family: 'Poppins', sans-serif;
+        }
+        .account-container {
+            max-width: 450px;
+            margin: auto;
+            margin-top: 50px;
+            padding: 30px;
+            background: #fff8e1;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .mandatory {
+            color: red;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #b08968;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .btn-custom {
+            background-color: #8b5e3c;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            border: none;
+            transition: 0.3s;
+        }
+        .btn-custom:hover {
+            background-color: #6a422b;
+        }
+        .toggle-link {
+            color: #8b5e3c;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
     <div class="account-container">
-        <h2>Login</h2>
-        <form id="login-form">
-            <label for="email">Email</label>
-            <input type="email" id="email" required>
-            
-            <label for="password">Password</label>
-            <input type="password" id="password" required>
-            
-            <button type="submit">Login</button>
+        <h2 id="form-title">Login</h2>
+        <form id="account-form">
+            <div id="signup-fields" style="display: none;">
+                <label for="first-name">First Name <span class="mandatory">*</span></label>
+                <input type="text" id="first-name" name="first_name" class="form-control">
+                <label for="last-name">Last Name <span class="mandatory">*</span></label>
+                <input type="text" id="last-name" name="last_name" class="form-control">
+            </div>
+            <label for="email">Email <span class="mandatory">*</span></label>
+            <input type="email" id="email" name="email" class="form-control" required>
+            <label for="password">Password <span class="mandatory">*</span></label>
+            <input type="password" id="password" name="password" class="form-control" required>
+            <button type="submit" id="submit-btn" class="btn-custom mt-3">Login</button>
         </form>
-        
-        <p>Don't have an account? <a href="register.html">Register</a></p>
+        <p class="mt-3">
+            <span id="toggle-text">Don't have an account?</span> <span class="toggle-link" id="toggle-form">Sign Up</span>
+        </p>
     </div>
+{% endblock %}
 
+{% block scripts %}
     <script>
-        document.getElementById('login-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            if (!email || !password) {
-                alert('Please fill in all fields');
+        document.addEventListener("DOMContentLoaded", function () {
+            const formTitle = document.getElementById('form-title');
+            const signupFields = document.getElementById('signup-fields');
+            const submitBtn = document.getElementById('submit-btn');
+            const toggleText = document.getElementById('toggle-text');
+            const toggleForm = document.getElementById('toggle-form');
+            const accountForm = document.getElementById('account-form');
+            const logoutBtn = document.querySelector(".logout-btn");
+            let isLogin = true;
+
+            console.log("Form element:", accountForm);
+            if (!accountForm) {
+                console.error("❌ Error: #account-form element NOT found in the DOM!");
                 return;
             }
-            
-            // Send data to server via Fetch API or AJAX
-            fetch('/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = 'dashboard.html'; // Redirect to the dashboard if login is successful
+
+            // Toggle between Login and Sign Up forms
+            toggleForm.addEventListener('click', function (event) {
+                event.preventDefault();
+                isLogin = !isLogin;
+                formTitle.textContent = isLogin ? 'Login' : 'Sign Up';
+                submitBtn.textContent = isLogin ? 'Login' : 'Sign Up';
+                toggleText.textContent = isLogin ? "Don't have an account?" : "Have an account?";
+                toggleForm.textContent = isLogin ? 'Sign Up' : 'Login';
+                signupFields.style.display = isLogin ? 'none' : 'block';
+
+                const firstName = document.getElementById("first-name");
+                const lastName = document.getElementById("last-name");
+
+                if (!isLogin) {
+                    firstName.setAttribute("required", "true");
+                    lastName.setAttribute("required", "true");
                 } else {
-                    alert('Invalid login credentials');
+                    firstName.removeAttribute("required");
+                    lastName.removeAttribute("required");
+                    firstName.value = '';
+                    lastName.value = '';
                 }
-            })
-            .catch(error => console.error('Error:', error));
+            });
+
+            // Enable the button only if all required fields are filled
+            accountForm.addEventListener('input', function () {
+                const requiredFields = accountForm.querySelectorAll('input[required]');
+                let allFilled = true;
+
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        allFilled = false;
+                    }
+                });
+
+                submitBtn.disabled = !allFilled;
+            });
+
+            // Handle Login/Signup Form Submission
+            accountForm.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                console.log("Login/Signup form submitted!");
+
+                const formData = {
+                    email: document.getElementById('email').value.trim() || '',
+                    password: document.getElementById('password').value.trim() || '',
+                };
+
+                console.log("Form Data:", formData);
+
+                if (!isLogin) {
+                    formData.first_name = document.getElementById('first-name').value.trim() || '';
+                    formData.last_name = document.getElementById('last-name').value.trim() || '';
+                    if (!formData.first_name || !formData.last_name) {
+                        alert("First name and last name are required for signup.");
+                        return;
+                    }
+                } else if (!formData.email || !formData.password) {
+                    alert("Email and password are required for login.");
+                    return;
+                }
+
+                const url = isLogin ? '/login' : '/signup';
+                console.log("Sending request to:", url);
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const data = await response.json();
+                    console.log("Server Response:", data);
+
+                    if (data.status === 'success') {
+                        window.location.href = data.redirect; // Use redirect from server response
+                    } else {
+                        alert(data.message);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Something went wrong. Please try again.');
+                }
+            });
+
+            // Handle Logout
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", async function (event) {
+                    event.preventDefault();
+                    try {
+                        const response = await fetch("/logout", { method: "GET" });
+                        const data = await response.json();
+                        if (data.status === 'success') {
+                            window.location.href = data.redirect; // Use redirect from server response
+                        } else {
+                            alert(data.message);
+                        }
+                    } catch (error) {
+                        console.error("Logout failed:", error);
+                        alert("Error logging out. Please try again.");
+                    }
+                });
+            }
         });
     </script>
-
-    <!-- Footer -->
-    <footer class="footer text-center py-3">
-        <div class="container">
-            <a href="{{ url_for('about') }}">About Us</a> | 
-            <a href="{{ url_for('contact') }}">Contact Us</a> | 
-            <a href="{{ url_for('careers') }}">Careers</a> |  
-            <a href="{{ url_for('terms') }}">Terms & Conditions</a>
-            <p>&copy; 2025 Lassi & Latte. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>
+{% endblock %}

@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lassi & Latte - Terms & Conditions</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% extends "base.html" %}
+
+{% block title %}Lassi & Latte - Terms & Conditions{% endblock %}
+
+{% block head %}
+    <!-- Page-specific styles -->
     <style>
         .terms-content {
             background: #fdf4e3;
@@ -25,79 +23,57 @@
         }
 
         /* Styled Privacy Policy Modal */
-.modal-content {
-    background: #fdf4e3;
-    border-radius: 12px;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
-    border: none;
-    padding: 20px;
-}
+        .modal-content {
+            background: #fdf4e3;
+            border-radius: 12px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+            border: none;
+            padding: 20px;
+        }
 
-.modal-header {
-    background: #5a4630;
-    color: white;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    padding: 15px;
-}
+        .modal-header {
+            background: #5a4630;
+            color: white;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            padding: 15px;
+        }
 
-.modal-title {
-    font-weight: bold;
-}
+        .modal-title {
+            font-weight: bold;
+        }
 
-.modal-body {
-    font-size: 1.1rem;
-    color: #333;
-    padding: 15px;
-    line-height: 1.5;
-}
+        .modal-body {
+            font-size: 1.1rem;
+            color: #333;
+            padding: 15px;
+            line-height: 1.5;
+        }
 
-.modal-footer {
-    background: #f7e1c1;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-    padding: 10px;
-    text-align: center;
-}
+        .modal-footer {
+            background: #f7e1c1;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            padding: 10px;
+            text-align: center;
+        }
 
-.btn-secondary {
-    background: #5a4630;
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 8px;
-    transition: 0.3s;
-}
+        .btn-secondary {
+            background: #5a4630;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
 
-.btn-secondary:hover {
-    background: #8a6d49;
-}
-
+        .btn-secondary:hover {
+            background: #8a6d49;
+        }
     </style>
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo"></a>
-        <div class="navbar-collapse collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto"></ul>
-            <div class="cafe-name">
-                <h1>Lassi & Latte</h1>
-            </div>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('basket') }}"><img src="{{ url_for('static', filename='basket.png') }}" alt="Basket" class="icon"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('account') }}"><img src="{{ url_for('static', filename='account.png') }}" alt="Account" class="icon"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='home.png') }}" alt="Home" class="icon"></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    
+{% endblock %}
+
+{% block content %}
     <div class="container">
         <div class="terms-content">
             <h1>Terms & Conditions</h1>
@@ -132,7 +108,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
-                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <p>At Lassi & Latte, we respect your privacy. We collect your personal data only to enhance your experience and provide our services effectively. We do not sell or share your information with third parties. By using our website, you agree to our data handling practices.</p>
@@ -144,20 +122,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="footer text-center py-3">
-        <div class="container">
-            <a href="{{ url_for('about') }}">About Us</a> | 
-            <a href="{{ url_for('contact') }}">Contact Us</a> | 
-            <a href="{{ url_for('careers') }}">Careers</a> |  
-            <a href="{{ url_for('terms') }}">Terms & Conditions</a>
-            <p>&copy; 2025 Lassi & Latte. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}
