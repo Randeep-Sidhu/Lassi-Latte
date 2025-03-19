@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - Lassi & Latte{% endblock %}
+
+{% block head %}
+    <style>
+        body {
+            background-color: #f8f1e5;
+            font-family: 'Poppins', sans-serif;
+        }
+        .profile-container {
+            max-width: 450px;
+            margin: auto;
+            margin-top: 50px;
+            padding: 30px;
+            background: #fff8e1;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .mandatory {
+            color: red;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #b08968;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .btn-custom {
+            background-color: #8b5e3c;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            border: none;
+            transition: 0.3s;
+        }
+        .btn-custom:hover {
+            background-color: #6a422b;
+        }
+        .btn-custom:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="profile-container">
+        <h2>Edit Profile</h2>
+        <form id="profile-form">
+            <label for="first-name">First Name <span class="mandatory">*</span></label>
+            <input type="text" id="first-name" name="first_name" class="form-control" value="{{ user.first_name }}" required>
+            
+            <label for="last-name">Last Name <span class="mandatory">*</span></label>
+            <input type="text" id="last-name" name="last_name" class="form-control" value="{{ user.last_name }}" required>
+            
+            <label for="email">Email (Cannot be changed)</label>
+            <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}" disabled>
+            
+            <label for="old-password">Old Password (Required to change password)</label>
+            <input type="password" id="old-password" name="old_password" class="form-control">
+            
+            <label for="new-password">New Password</label>
+            <input type="password" id="new-password" name="new_password" class="form-control">
+            
+            <button type="submit" id="submit-btn" class="btn-custom mt-3">Update Profile</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const profileForm = document.getElementById('profile-form');
+            const submitBtn = document.getElementById('submit-btn');
+
+            profileForm.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const formData = {
+                    first_name: document.getElementById('first-name').value.trim(),
+                    last_name: document.getElementById('last-name').value.trim(),
+                    old_password: document.getElementById('old-password').value.trim(),
+                    new_password: document.getElementById('new-password').value.trim()
+                };
+
+                if (!formData.first_name || !formData.last_name) {
+                    alert('First name and last name are required.');
+                    return;
+                }
+
+                if ((formData.old_password && !formData.new_password) || (!formData.old_password && formData.new_password)) {
+                    alert('Both old and new passwords are required to change your password.');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/account/update_profile', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const data = await response.json();
+                    if (data.status === 'success') {
+                        alert('Profile updated successfully!');
+                        // Optionally clear password fields
+                        document.getElementById('old-password').value = '';
+                        document.getElementById('new-password').value = '';
+                    } else {
+                        alert(data.message);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Something went wrong. Please try again.');
+                }
+            });
+        });
+    </script>
+{% endblock %}

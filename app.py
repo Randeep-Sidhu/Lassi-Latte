@@ -172,7 +172,8 @@ def login():
             session['first_name'] = user['first_name'].capitalize()
             session['last_name'] = user['last_name'].capitalize()
             
-            redirect_url = '/admin' if user['is_admin'] else '/'
+            # Redirect all users to homepage after login
+            redirect_url = '/'
             return jsonify({"status": "success", "message": "Login successful!", "redirect": redirect_url})
         else:
             return jsonify({"status": "error", "message": "Invalid email or password."})
@@ -375,6 +376,75 @@ def admin_contact_dashboard():
     cur.close()
 
     return render_template('admin_contact.html', contact_messages=contact_messages, feedback=feedback)
+
+# User Profile Route
+@app.route('/account/profile')
+def profile():
+    if 'user_id' not in session:
+        return redirect(url_for('account'))
+    
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT first_name, last_name, email FROM users WHERE id = %s", (session['user_id'],))
+    user = cur.fetchone()
+    cur.close()
+    
+    return render_template('profile.html', user=user)
+
+# Update Profile Route
+@app.route('/account/update_profile', methods=['POST'])
+def update_profile():
+    if 'user_id' not in session:
+        return jsonify({'status': 'error', 'message': 'Please log in to update your profile'})
+
+    data = request.get_json()
+    first_name = data.get('first_name')
+    last_name = data.get('last_name')
+    old_password = data.get('old_password')
+    new_password = data.get('new_password')
+
+    if not first_name or not last_name:
+        return jsonify({'status': 'error', 'message': 'First name and last name are required'})
+
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT password_hash FROM users WHERE id = %s", (session['user_id'],))
+        user = cur.fetchone()
+
+        # If password change is requested, verify old password
+        if old_password or new_password:
+            if not old_password or not new_password:
+                cur.close()
+                return jsonify({'status': 'error', 'message': 'Both old and new passwords are required to change password'})
+            if not bcrypt.check_password_hash(user['password_hash'], old_password):
+                cur.close()
+                return jsonify({'status': 'error', 'message': 'Incorrect old password'})
+
+        # Update fields
+        if old_password and new_password:
+            hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+            cur.execute("""
+                UPDATE users 
+                SET first_name = %s, last_name = %s, password_hash = %s 
+                WHERE id = %s
+            """, (first_name.capitalize(), last_name.capitalize(), hashed_password, session['user_id']))
+        else:
+            cur.execute("""
+                UPDATE users 
+                SET first_name = %s, last_name = %s 
+                WHERE id = %s
+            """, (first_name.capitalize(), last_name.capitalize(), session['user_id']))
+
+        mysql.connection.commit()
+        cur.close()
+
+        # Update session with new names
+        session['first_name'] = first_name.capitalize()
+        session['last_name'] = last_name.capitalize()
+
+        return jsonify({'status': 'success', 'message': 'Profile updated successfully!'})
+    except Exception as e:
+        mysql.connection.rollback()
+        return jsonify({'status': 'error', 'message': f'Error: {str(e)}'})
 
 if __name__ == '__main__':
     app.run(debug=True)

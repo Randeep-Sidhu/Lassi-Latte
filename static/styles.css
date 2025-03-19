@@ -470,6 +470,21 @@ body.popup-open {
     display: none;
 }
 
+.dropdown-menu {
+    background-color: #fff8e1;
+    border: 1px solid #b08968;
+}
+.dropdown-item {
+    color: #8b5e3c;
+}
+.dropdown-item:hover {
+    background-color: #f8f1e5;
+    color: #6a422b;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
 /* Footer Styles */
 .footer {
     background-color: #c4b5a4; /* Mushroom color */
